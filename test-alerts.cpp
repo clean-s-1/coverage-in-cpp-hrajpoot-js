@@ -9,11 +9,6 @@ TEST_CASE("infers the breach according to limits") {
   REQUIRE(breachObj.inferBreach(12, 20, 30) == TOO_LOW);
 }
 
-TEST_CASE("case 1: classify the temperature breach") {
-  Breach breachObj;
-  REQUIRE(breachObj.classifyTemperatureBreach(PASSIVE_COOLING, 12) == NORMAL);
-}
-
 TEST_CASE("case 2: classify the temperature breach") {
   Breach breachObj;
   REQUIRE(breachObj.classifyTemperatureBreach(PASSIVE_COOLING, -1) == TOO_LOW);
@@ -24,12 +19,6 @@ TEST_CASE("case 3: classify the temperature breach") {
   REQUIRE(breachObj.classifyTemperatureBreach(PASSIVE_COOLING, 36) == TOO_HIGH);
 }
 
-TEST_CASE("case 4: classify the temperature breach") {
-  Breach breachObj;
-  REQUIRE(breachObj.classifyTemperatureBreach(HI_ACTIVE_COOLING, 25) == NORMAL);
-}
-
-
 TEST_CASE("case 5: classify the temperature breach") {
   Breach breachObj;
   REQUIRE(breachObj.classifyTemperatureBreach(HI_ACTIVE_COOLING, -1) == TOO_LOW);
@@ -39,12 +28,6 @@ TEST_CASE("case 6: classify the temperature breach") {
   Breach breachObj;
   REQUIRE(breachObj.classifyTemperatureBreach(PASSIVE_COOLING, 46) == TOO_HIGH);
 }
-
-TEST_CASE("case 7: classify the temperature breach") {
-  Breach breachObj;
-  REQUIRE(breachObj.classifyTemperatureBreach(MED_ACTIVE_COOLING, 35) == NORMAL);
-}
-
 
 TEST_CASE("case 8: classify the temperature breach") {
   Breach breachObj;
