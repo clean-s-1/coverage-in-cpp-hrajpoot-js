@@ -1,12 +1,12 @@
 #include "typewise-alert.h"
+#include "limit_breach.h"
 #include <stdio.h>
 #include "alerter.h"
-#include "limit_breach.h"
 
 void checkAndAlert(
-    AlertTarget alertTarget, CollingType *collingType, double temperatureInC) {
+    AlertTarget alertTarget, BatteryCoolingType *coolingType, double temperatureInC) {
 
-  Breach breachObj(collingType);
+  Breach breachObj(coolingType);
   BreachType breachType = breachObj.classifyTemperatureBreach(temperatureInC);
 
   Alerter alert;

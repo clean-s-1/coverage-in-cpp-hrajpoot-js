@@ -1,43 +1,42 @@
 #include <bits/stdc++.h>
 #include "typewise-alert.h"
 
-class CollingType
+class BatteryCoolingType
 {
     private:
         int _lowerLimit;
         int _upperLimit;
     public:
-        CollingType(int lowerLimit, int upperLimit) : _lowerLimit(lowerLimit), _upperLimit(upperLimit) {}
+        BatteryCoolingType(int lowerLimit, int upperLimit) : _lowerLimit(lowerLimit), _upperLimit(upperLimit) {}
 
         int fetchLowerLimit();
         int fetchUpperLimit();
 };
 
-class PassiveColling : public CollingType
+class PassiveCooling : public BatteryCoolingType
 {
     public:
-       PassiveColling() : CollingType(0, 35) {}
+       PassiveCooling() : BatteryCoolingType(0, 35) {}
 };
 
-class HiActiveColling : public CollingType
+class HiActiveCooling : public BatteryCoolingType
 {
     public: 
-        HiActiveColling() : CollingType(0, 45) {}
+        HiActiveCooling() : BatteryCoolingType(0, 45) {}
 };
 
-class MedActiveColling : public CollingType
+class MedActiveCooling : public BatteryCoolingType
 {
     public:
-        MedActiveColling() : CollingType(0, 40) {}
+        MedActiveCooling() : BatteryCoolingType(0, 40) {}
 }; 
 
 class Breach
 {
-    private:
-        CollingType *_collingType = nullptr;
     public:
+        BatteryCoolingType *_coolingType = nullptr;
         Breach() = default;
-        Breach(CollingType *collingType) : _collingType(collingType) {}
+        Breach(BatteryCoolingType *coolingTypeObj) : _coolingType(coolingTypeObj) {}
 
         BreachType inferBreach(double value, double lowerLimit, double upperLimit);
         BreachType classifyTemperatureBreach(double temperatureInC);

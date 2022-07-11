@@ -1,11 +1,11 @@
 #include "limit_breach.h"
 
-int CollingType::fetchLowerLimit()
+int BatteryCoolingType::fetchLowerLimit()
 {
     return _lowerLimit; 
 }
 
-int CollingType::fetchUpperLimit()
+int BatteryCoolingType::fetchUpperLimit()
 {
     return _upperLimit; 
 }
@@ -25,8 +25,8 @@ BreachType Breach::classifyTemperatureBreach(double temperatureInC) {
   int lowerLimit = 0;
   int upperLimit = 0;
 
-  if(_collingType)
-      return inferBreach(temperatureInC, _collingType->fetchLowerLimit(), _collingType->fetchUpperLimit());
+  if(_coolingType)
+      return inferBreach(temperatureInC, _coolingType->fetchLowerLimit(), _coolingType->fetchUpperLimit());
   
   return UN_KNOWN;
 }

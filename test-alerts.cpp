@@ -17,23 +17,36 @@ TEST_CASE("Case 3: infers the breach according to limits") {
   REQUIRE(breachObj.inferBreach(25, 20, 30) == NORMAL);
 }
 
-TEST_CASE("Classify the temperature breach for passive colling") {
-  Breach breachObj(new PassiveColling());
+TEST_CASE("Classify the temperature breach for passive Cooling") {
+  Breach breachObj(new PassiveCooling());
   REQUIRE(breachObj.classifyTemperatureBreach(12) == NORMAL);
   REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
   REQUIRE(breachObj.classifyTemperatureBreach(36) == TOO_HIGH);
+
+  //limit check
+  REQUIRE(breachObj._coolingType->fetchLowerLimit() == 0);
+  REQUIRE(breachObj._coolingType->fetchUpperLimit() == 35);
 }
 
-TEST_CASE("Classify the temperature breach for hi active colling") {
-  Breach breachObj(new HiActiveColling());
+TEST_CASE("Classify the temperature breach for hi active Cooling") {
+  Breach breachObj(new HiActiveCooling());
   REQUIRE(breachObj.classifyTemperatureBreach(25) == NORMAL);
   REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
   REQUIRE(breachObj.classifyTemperatureBreach(46) == TOO_HIGH);
+
+  //limit check
+  REQUIRE(breachObj._coolingType->fetchLowerLimit() == 0);
+  REQUIRE(breachObj._coolingType->fetchUpperLimit() == 45);
 }
 
-TEST_CASE("Classify the temperature breach for med active colling") {
-  Breach breachObj(new MedActiveColling());
+TEST_CASE("Classify the temperature breach for med active Cooling") {
+  Breach breachObj(new MedActiveCooling());
   REQUIRE(breachObj.classifyTemperatureBreach(35) == NORMAL);
   REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
   REQUIRE(breachObj.classifyTemperatureBreach(41) == TOO_HIGH);
+
+  //limit check
+  REQUIRE(breachObj._coolingType->fetchLowerLimit() == 0);
+  REQUIRE(breachObj._coolingType->fetchUpperLimit() == 40);
 }
+
