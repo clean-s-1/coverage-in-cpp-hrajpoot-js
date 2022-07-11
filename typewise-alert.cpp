@@ -4,12 +4,10 @@
 #include "limit_breach.h"
 
 void checkAndAlert(
-    AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
+    AlertTarget alertTarget, CollingType *collingType, double temperatureInC) {
 
-  Breach breachObj;
-  BreachType breachType = breachObj.classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
-
-  breachObj.set_breachType(breachType);
+  Breach breachObj(collingType);
+  BreachType breachType = breachObj.classifyTemperatureBreach(temperatureInC);
 
   Alerter alert;
   switch(alertTarget) {

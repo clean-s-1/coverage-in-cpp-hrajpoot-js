@@ -1,6 +1,15 @@
 #include "limit_breach.h"
 
-BreachType Breach::_breachType;
+int CollingType::fetchLowerLimit()
+{
+    return _lowerLimit; 
+}
+
+int CollingType::fetchUpperLimit()
+{
+    return _upperLimit; 
+}
+
 
 BreachType Breach::inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
@@ -12,33 +21,12 @@ BreachType Breach::inferBreach(double value, double lowerLimit, double upperLimi
   return NORMAL;
 }
 
-BreachType Breach::classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
+BreachType Breach::classifyTemperatureBreach(double temperatureInC) {
   int lowerLimit = 0;
   int upperLimit = 0;
-  switch(coolingType) {
-    case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
-      break;
-  }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
-}
 
-void Breach::set_breachType(BreachType breachType)
-{
-    _breachType = breachType;    
-}
-
-BreachType Breach::fetchBreachType()
-{
-    return _breachType;
+  if(_collingType)
+      return inferBreach(temperatureInC, _collingType->fetchLowerLimit(), _collingType->fetchUpperLimit());
+  
+  return UN_KNOWN;
 }

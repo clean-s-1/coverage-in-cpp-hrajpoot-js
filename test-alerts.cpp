@@ -4,88 +4,36 @@
 #include "typewise-alert.h"
 #include "limit_breach.h"
 
-TEST_CASE("case 1: check and alert") {
+TEST_CASE("Case 1: infers the breach according to limits") {
   Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = PASSIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 36);
-  REQUIRE(breachObj.fetchBreachType() == TOO_HIGH);
+  REQUIRE(breachObj.inferBreach(12, 20, 30) == TOO_LOW);
+}
+TEST_CASE("Case 2: infers the breach according to limits") {
+  Breach breachObj;
+  REQUIRE(breachObj.inferBreach(31, 20, 30) == TOO_HIGH);
+}
+TEST_CASE("Case 3: infers the breach according to limits") {
+  Breach breachObj;
+  REQUIRE(breachObj.inferBreach(25, 20, 30) == NORMAL);
 }
 
-TEST_CASE("case 2: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = PASSIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, -1);
-  REQUIRE(breachObj.fetchBreachType() == TOO_LOW);
+TEST_CASE("Classify the temperature breach for passive colling") {
+  Breach breachObj(new PassiveColling());
+  REQUIRE(breachObj.classifyTemperatureBreach(12) == NORMAL);
+  REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
+  REQUIRE(breachObj.classifyTemperatureBreach(36) == TOO_HIGH);
 }
 
-TEST_CASE("case 3: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = PASSIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 25);
-  REQUIRE(breachObj.fetchBreachType() == NORMAL);
+TEST_CASE("Classify the temperature breach for hi active colling") {
+  Breach breachObj(new HiActiveColling());
+  REQUIRE(breachObj.classifyTemperatureBreach(25) == NORMAL);
+  REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
+  REQUIRE(breachObj.classifyTemperatureBreach(46) == TOO_HIGH);
 }
 
-
-TEST_CASE("case 4: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = HI_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 46);
-  REQUIRE(breachObj.fetchBreachType() == TOO_HIGH);
+TEST_CASE("Classify the temperature breach for med active colling") {
+  Breach breachObj(new MedActiveColling());
+  REQUIRE(breachObj.classifyTemperatureBreach(35) == NORMAL);
+  REQUIRE(breachObj.classifyTemperatureBreach(-1) == TOO_LOW);
+  REQUIRE(breachObj.classifyTemperatureBreach(41) == TOO_HIGH);
 }
-
-
-TEST_CASE("case 5: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = HI_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, -1);
-  REQUIRE(breachObj.fetchBreachType() == TOO_LOW);
-}
-
-
-TEST_CASE("case 6: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = HI_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 35);
-  REQUIRE(breachObj.fetchBreachType() == NORMAL);
-}
-
-
-TEST_CASE("case 7: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = MED_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 41);
-  REQUIRE(breachObj.fetchBreachType() == TOO_HIGH);
-}
-
-TEST_CASE("case 8: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = MED_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, -1);
-  REQUIRE(breachObj.fetchBreachType() == TOO_LOW);
-}
-
-TEST_CASE("case 9: check and alert") {
-  Breach breachObj;
-  BatteryCharacter batteryCharacter;
-  batteryCharacter.coolingType = MED_ACTIVE_COOLING;
-
-  checkAndAlert(TO_CONTROLLER, batteryCharacter, 39);
-  REQUIRE(breachObj.fetchBreachType() == NORMAL);
-}
-
