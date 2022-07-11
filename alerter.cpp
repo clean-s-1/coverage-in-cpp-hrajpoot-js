@@ -17,15 +17,14 @@ void Alerter::sendToController(BreachType breachType) {
 
 void Alerter::sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
+  if(breachType == TOO_LOW)
+  {
       composeAnEmail(recepient, "low");
-      break;
-    case TOO_HIGH:
+  }
+
+  if(breachType == TOO_HIGH)
+  {
       composeAnEmail(recepient, "high");
-      break;
-    case NORMAL:
-      break;
   }
 }
 
